@@ -79,7 +79,7 @@ public class GetUserServiceGrpcImpl extends GetUserServiceGrpc.GetUserServiceImp
 
 	三种调用方式参考:
 -------------------------------------------------------------1.同步调用方式------------------------------------------------------------------------------
-	GomeplusRpcServices.ResponseUser responseUser = GetUserServiceGrpc.newBlockingStub(LoadBalanceRouter.INSTANCE.getRouterChannel()).getUser(requestUser);
+	GomeplusRpcServices.ResponseUser responseUser = GetUserServiceGrpc.newBlockingStub(LoadBalanceRouter.INSTANCE.getRouterChannel()).withDeadlineAfter(5, TimeUnit.SECONDS).getUser(requestUser);
 
 -------------------------------------------------------------1.同步调用方式 end ------------------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ public class GetUserServiceGrpcImpl extends GetUserServiceGrpc.GetUserServiceImp
          }
      };
      //调用
-	 GetUserServiceGrpc.newStub(LoadBalanceRouter.INSTANCE.getRouterChannel()).getUser(requestUser, streamOberser);
+	 GetUserServiceGrpc.newStub(LoadBalanceRouter.INSTANCE.getRouterChannel()).withDeadlineAfter(5, TimeUnit.SECONDS).getUser(requestUser, streamOberser);
 
 -------------------------------------------------------------2.异步回调请求结果的调用方式 end ------------------------------------------------------------------------------
 
@@ -118,7 +118,7 @@ public class GetUserServiceGrpcImpl extends GetUserServiceGrpc.GetUserServiceImp
 -------------------------------------------------------------3.异步带返回值的调用方式------------------------------------------------------------------------------
 	 //3.异步带返回值的调用方式
 	 //异步调用得到ListenbleFuture对象
-	 ListenableFuture<GomeplusRpcServices.ResponseUser> listenableFuture = GetUserServiceGrpc.newFutureStub(LoadBalanceRouter.INSTANCE.getRouterChannel()).getUser(requestUser);
+	 ListenableFuture<GomeplusRpcServices.ResponseUser> listenableFuture = GetUserServiceGrpc.newFutureStub(LoadBalanceRouter.INSTANCE.getRouterChannel()).withDeadlineAfter(5, TimeUnit.SECONDS).getUser(requestUser);
 	 //通过ListenbleFuture对象获得返回结果
      GomeplusRpcServices.ResponseUser user = listenableFuture.get();
 
